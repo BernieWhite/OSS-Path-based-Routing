@@ -1,0 +1,29 @@
+# An ingress configuration resource
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+  namespace: demo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+
+  tls:
+  - hosts:
+    - yourdomain
+
+  rules:
+  - host: yourdomain
+    http:
+      paths:
+
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aks-helloworld-one
+            port:
+              number: 80
